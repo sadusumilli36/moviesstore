@@ -46,6 +46,24 @@
               href="{% url 'movies.delete_review' id=template_data.movie.id review_id=review.id %}">Delete
             </a>
             {% endif %}
+            {% if user.is_authenticated and user != review.user %}
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                    <div class="card shadow p-1 mb-1 rounded">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <b class="text-start">Report an Inappropriate Review</b><br /><br />
+                                <form method="POST" action="{% url 'movies.report_review' id=template_data.movie.id review_id=review.id %}"> {% csrf_token %}<p>
+                                    <div class="text-center">
+                                    <button type="submit" class="btn bg-dark text-white">Report</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>
